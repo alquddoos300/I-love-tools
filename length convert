@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ============================================
+         HEAD SECTION - Meta Tags, Title & Styles
+         ============================================ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Length Converter Tool - Convert between Meters, Kilometers, Feet, Inches, Centimeters, and Miles instantly.">
+    <meta name="keywords" content="length converter, unit converter, meters to feet, km to miles, conversion tool">
+    <meta name="author" content="Professional Tools">
+    <title>Professional Length Converter</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Internal CSS Styles -->
+    <style>
+        /* ============================================
+           CSS Reset & Base Styles
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --secondary-color: #64748b;
+            --background-color: #f1f5f9;
+            --card-background: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e0e7ff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           Header Section Styles
+           ============================================ */
+        header {
+            background: var(--card-background);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .logo-text span {
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+        }
+
+        /* ============================================
+           Main Content Section Styles
+           ============================================ */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1.5rem;
+        }
+
+        .converter-container {
+            background: var(--card-background);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .converter-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .converter-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;        }
+
+        .converter-header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-family: inherit;
+            color: var(--text-primary);
+            background: var(--card-background);
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;            background-size: 1rem;
+            padding-right: 3rem;
+        }
+
+        .unit-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 480px) {
+            .unit-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Convert Button */
+        .convert-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .convert-btn:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .convert-btn:active {
+            transform: translateY(0);
+        }
+
+        .convert-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Result Display */
+        .result-container {            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--primary-light);
+            text-align: center;
+            display: none;
+        }
+
+        .result-container.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            word-break: break-all;
+        }
+
+        .result-formula {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Error Message */
+        .error-message {            background: #fef2f2;
+            border: 2px solid var(--error-color);
+            color: var(--error-color);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* History Section */
+        .history-section {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .history-header h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .clear-history-btn {
+            background: var(--error-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .clear-history-btn:hover {
+            background: #dc2626;
+        }
+
+        .history-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0.5rem;
+        }
+
+        .history-item {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-value {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .history-time {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .history-empty: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* ============================================
+           Footer Section Styles
+           ============================================ */
+        footer {
+            background: var(--card-background);
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            text-align: center;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .footer-text a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 640px) {
+            .converter-container {
+                padding: 1.5rem;
+            }
+
+            .converter-header h1 {
+                font-size: 1.5rem;
+            }
+            .result-value {
+                font-size: 1.5rem;
+            }
+
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ============================================
+         BODY SECTION - Header, Main Content, Footer
+         ============================================ -->
+    
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-text">Length<span>Converter</span></div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Tools</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="converter-container">
+            <div class="converter-header">
+                <h1>📏 Length Converter</h1>
+                <p>Convert between different length units instantly</p>
+            </div>
+
+            <form id="converterForm">
+                <!-- Input Value -->
+                <div class="form-group">
+                    <label class="form-label" for="inputValue">Enter Value</label>
+                    <input 
+                        type="number" 
+                        id="inputValue" 
+                        class="form-input"                         placeholder="Enter the value to convert"
+                        step="any"
+                        min="0"
+                        required
+                    >
+                </div>
+
+                <!-- Unit Selection -->
+                <div class="unit-row">
+                    <div class="form-group">
+                        <label class="form-label" for="fromUnit">From</label>
+                        <select id="fromUnit" class="form-select" required>
+                            <option value="meters">Meters (m)</option>
+                            <option value="kilometers">Kilometers (km)</option>
+                            <option value="centimeters">Centimeters (cm)</option>
+                            <option value="millimeters">Millimeters (mm)</option>
+                            <option value="feet">Feet (ft)</option>
+                            <option value="inches">Inches (in)</option>
+                            <option value="yards">Yards (yd)</option>
+                            <option value="miles">Miles (mi)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="toUnit">To</label>
+                        <select id="toUnit" class="form-select" required>
+                            <option value="feet">Feet (ft)</option>
+                            <option value="meters">Meters (m)</option>
+                            <option value="kilometers">Kilometers (km)</option>
+                            <option value="centimeters">Centimeters (cm)</option>
+                            <option value="millimeters">Millimeters (mm)</option>
+                            <option value="inches">Inches (in)</option>
+                            <option value="yards">Yards (yd)</option>
+                            <option value="miles">Miles (mi)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Convert Button -->
+                <button type="submit" class="convert-btn" id="convertBtn">
+                    🔄 Convert Now
+                </button>
+
+                <!-- Error Message -->
+                <div class="error-message" id="errorMessage">
+                    ⚠️ Please enter a valid positive number to convert.
+                </div>
+
+                <!-- Result Display -->
+                <div class="result-container" id="resultContainer">                    <div class="result-label">Converted Result</div>
+                    <div class="result-value" id="resultValue">0</div>
+                    <div class="result-formula" id="resultFormula"></div>
+                </div>
+            </form>
+
+            <!-- History Section -->
+            <div class="history-section">
+                <div class="history-header">
+                    <h2>Conversion History</h2>
+                    <button class="clear-history-btn" id="clearHistoryBtn">Clear History</button>
+                </div>
+                <div class="history-list" id="historyList">
+                    <div class="history-empty" id="historyEmpty">No conversions yet. Your conversions will appear here.</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p class="footer-text">
+                © 2024 Professional Length Converter. All rights reserved.
+            </p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Help Center</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================
+         END SECTION - JavaScript Logic
+         ============================================ -->
+    <script>
+        /**
+         * ============================================
+         * Length Converter Tool - JavaScript Logic
+         * ============================================
+         * This script handles all conversion calculations,
+         * form validation, history management, and UI interactions.
+         */
+
+        // Conversion factors to meters (base unit)
+        const conversionFactors = {
+            meters: 1,
+            kilometers: 1000,
+            centimeters: 0.01,            millimeters: 0.001,
+            feet: 0.3048,
+            inches: 0.0254,
+            yards: 0.9144,
+            miles: 1609.344
+        };
+
+        // Unit display names for formulas
+        const unitNames = {
+            meters: 'm',
+            kilometers: 'km',
+            centimeters: 'cm',
+            millimeters: 'mm',
+            feet: 'ft',
+            inches: 'in',
+            yards: 'yd',
+            miles: 'mi'
+        };
+
+        // DOM Elements
+        const converterForm = document.getElementById('converterForm');
+        const inputValue = document.getElementById('inputValue');
+        const fromUnit = document.getElementById('fromUnit');
+        const toUnit = document.getElementById('toUnit');
+        const convertBtn = document.getElementById('convertBtn');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultValue = document.getElementById('resultValue');
+        const resultFormula = document.getElementById('resultFormula');
+        const errorMessage = document.getElementById('errorMessage');
+        const historyList = document.getElementById('historyList');
+        const historyEmpty = document.getElementById('historyEmpty');
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+
+        /**
+         * Convert length from one unit to another
+         * @param {number} value - The value to convert
+         * @param {string} from - Source unit
+         * @param {string} to - Target unit
+         * @returns {number} - Converted value
+         */
+        function convertLength(value, from, to) {
+            // Convert to meters first (base unit)
+            const valueInMeters = value * conversionFactors[from];
+            // Convert from meters to target unit
+            const convertedValue = valueInMeters / conversionFactors[to];
+            return convertedValue;
+        }
+
+        /**
+         * Format the result number for display         * @param {number} num - The number to format
+         * @returns {string} - Formatted number string
+         */
+        function formatNumber(num) {
+            // Handle very small or very large numbers
+            if (num === 0) return '0';
+            if (Math.abs(num) < 0.0001 || Math.abs(num) > 1000000) {
+                return num.toExponential(6);
+            }
+            // Round to 6 decimal places and remove trailing zeros
+            return parseFloat(num.toFixed(6)).toString();
+        }
+
+        /**
+         * Show error message
+         * @param {string} message - Error message to display
+         */
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            resultContainer.classList.remove('show');
+        }
+
+        /**
+         * Hide error message
+         */
+        function hideError() {
+            errorMessage.classList.remove('show');
+        }
+
+        /**
+         * Display the conversion result
+         * @param {number} result - The converted value
+         * @param {string} from - Source unit
+         * @param {string} to - Target unit
+         * @param {number} originalValue - Original input value
+         */
+        function displayResult(result, from, to, originalValue) {
+            resultValue.textContent = formatNumber(result) + ' ' + unitNames[to];
+            resultFormula.textContent = `${originalValue} ${unitNames[from]} = ${formatNumber(result)} ${unitNames[to]}`;
+            resultContainer.classList.add('show');
+        }
+
+        /**
+         * Save conversion to history
+         * @param {number} originalValue - Original input value
+         * @param {string} from - Source unit
+         * @param {string} to - Target unit
+         * @param {number} result - Converted value
+         */        function saveToHistory(originalValue, from, to, result) {
+            const history = JSON.parse(localStorage.getItem('conversionHistory')) || [];
+            
+            const newEntry = {
+                id: Date.now(),
+                originalValue: originalValue,
+                from: from,
+                to: to,
+                result: result,
+                timestamp: new Date().toISOString()
+            };
+            
+            history.unshift(newEntry);
+            
+            // Limit history to 20 items
+            if (history.length > 20) {
+                history.pop();
+            }
+            
+            localStorage.setItem('conversionHistory', JSON.stringify(history));
+            updateHistoryDisplay();
+        }
+
+        /**
+         * Update history display
+         */
+        function updateHistoryDisplay() {
+            const history = JSON.parse(localStorage.getItem('conversionHistory')) || [];
+            
+            if (history.length === 0) {
+                historyList.innerHTML = '<div class="history-empty" id="historyEmpty">No conversions yet. Your conversions will appear here.</div>';
+                return;
+            }
+            
+            historyList.innerHTML = '';
+            
+            history.forEach(entry => {
+                const entryElement = document.createElement('div');
+                entryElement.className = 'history-item';
+                
+                const date = new Date(entry.timestamp);
+                const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                
+                entryElement.innerHTML = `
+                    <div>
+                        <div>${entry.originalValue} ${unitNames[entry.from]} → ${formatNumber(entry.result)} ${unitNames[entry.to]}</div>
+                        <div class="history-time">${formattedDate}</div>
+                    </div>
+                    <div class="history-value">${formatNumber(entry.result)} ${unitNames[entry.to]}</div>
+                `;                
+                historyList.appendChild(entryElement);
+            });
+        }
+
+        /**
+         * Clear history
+         */
+        function clearHistory() {
+            localStorage.removeItem('conversionHistory');
+            updateHistoryDisplay();
+        }
+
+        /**
+         * Handle form submission
+         * @param {Event} e - Form submit event
+         */
+        function handleConvert(e) {
+            e.preventDefault();
+            hideError();
+
+            // Get input values
+            const value = parseFloat(inputValue.value);
+            const from = fromUnit.value;
+            const to = toUnit.value;
+
+            // Validate input
+            if (isNaN(value) || value < 0) {
+                showError('⚠️ Please enter a valid positive number to convert.');
+                inputValue.focus();
+                return;
+            }
+
+            if (value === '') {
+                showError('⚠️ Please enter a value to convert.');
+                inputValue.focus();
+                return;
+            }
+
+            // Disable button during conversion
+            convertBtn.disabled = true;
+            convertBtn.textContent = '⏳ Converting...';
+
+            // Perform conversion with slight delay for UX
+            setTimeout(() => {
+                const result = convertLength(value, from, to);
+                displayResult(result, from, to, value);
+                
+                // Save to history
+                saveToHistory(value, from, to, result);                
+                // Re-enable button
+                convertBtn.disabled = false;
+                convertBtn.textContent = '🔄 Convert Now';
+            }, 300);
+        }
+
+        /**
+         * Handle real-time conversion on input change
+         */
+        function handleRealTimeConvert() {
+            const value = parseFloat(inputValue.value);
+            const from = fromUnit.value;
+            const to = toUnit.value;
+
+            if (!isNaN(value) && value >= 0 && value !== '') {
+                hideError();
+                const result = convertLength(value, from, to);
+                displayResult(result, from, to, value);
+            } else if (inputValue.value !== '') {
+                showError('⚠️ Please enter a valid positive number.');
+            } else {
+                resultContainer.classList.remove('show');
+                hideError();
+            }
+        }
+
+        // Event Listeners
+        converterForm.addEventListener('submit', handleConvert);
+        inputValue.addEventListener('input', handleRealTimeConvert);
+        fromUnit.addEventListener('change', handleRealTimeConvert);
+        toUnit.addEventListener('change', handleRealTimeConvert);
+        clearHistoryBtn.addEventListener('click', clearHistory);
+
+        // Initialize - Set default values and load history
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ Length Converter Tool Initialized Successfully');
+            console.log('📏 Available units:', Object.keys(conversionFactors).join(', '));
+            updateHistoryDisplay();
+        });
+
+        // Keyboard shortcut for conversion (Enter key)
+        inputValue.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleConvert(e);
+            }
+        });
+    </script>
+</body></html>
